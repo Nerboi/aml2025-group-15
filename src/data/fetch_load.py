@@ -1,5 +1,5 @@
 """
-Fetch Actual Generation per Production Type from ENTSO-E and return as DataFrame.
+Fetch Actual Load from ENTSO-E and return as DataFrame.
 """
 
 import http.client
