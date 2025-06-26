@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+.env
+.venv
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+*.ipynb
+
+# Data Files
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.h5
+*.xlsx
+
+# Logs and Outputs
+*.log
+*.out
+*.tmp
+
+# VSCode / IDEs
+.vscode/
+.idea/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Environment
+*.env
+*.conda
+*.mamba
+poetry.lock
