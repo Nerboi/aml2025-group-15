@@ -5,7 +5,7 @@ Fetch Actual Load from ENTSO-E and return as DataFrame.
 import http.client
 import xml.etree.ElementTree as ET
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 import os
 
@@ -58,6 +58,14 @@ def get_total_load(start_date, end_date, country_code="10YNL----------L"):
             })
 
     df = pd.DataFrame(gen_data)
+    # Enforce start and end date boundaries
+    df["datetime"] = pd.to_datetime(df["datetime"], utc=True)
+    df = df.groupby("datetime", as_index=False)[f"quantity_MW"].sum()
+
+    start_dt = datetime.strptime(start_date, "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
+    end_dt = datetime.strptime(end_date, "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
+
+    df = df[(df["datetime"] >= start_dt) & (df["datetime"] < end_dt)].reset_index(drop=True)
 
     return df
 

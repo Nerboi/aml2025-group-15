@@ -42,3 +42,8 @@ Thumbs.db
 *.conda
 *.mamba
 poetry.lock
+
+.cache
+.cache.sqlite
+.cache-wal
+.cache-shm

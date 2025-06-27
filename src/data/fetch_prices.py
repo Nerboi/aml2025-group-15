@@ -6,7 +6,7 @@ This script retrieves energy prices for a specified date range and country code.
 import http.client
 import xml.etree.ElementTree as ET
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 import os
 
@@ -52,6 +52,15 @@ def get_energy_prices(start_date, end_date, country_code="10YNL----------L"):
             prices.append({"datetime": timestamp, "price_EUR_MWh": price})
 
     df = pd.DataFrame(prices)
+    # Enforce start and end date boundaries
+    df["datetime"] = pd.to_datetime(df["datetime"], utc=True)
+    df = df.groupby("datetime", as_index=False)[f"price_EUR_MWh"].sum()
+
+    start_dt = datetime.strptime(start_date, "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
+    end_dt = datetime.strptime(end_date, "%Y%m%d%H%M").replace(tzinfo=timezone.utc)
+
+    df = df[(df["datetime"] >= start_dt) & (df["datetime"] < end_dt)].reset_index(drop=True)
+
     return df
 
 if __name__ == "__main__":
