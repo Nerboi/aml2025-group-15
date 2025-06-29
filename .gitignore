@@ -11,11 +11,6 @@ __pycache__/
 dist/
 build/
 
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-*.ipynb
-
 # Data Files
 data/raw/
 data/processed/

@@ -3,10 +3,10 @@ Script to merge generation data from multiple sources into a single DataFrame.
 """
 
 import pandas as pd
-from fetch_load import get_total_load
-from fetch_prices import get_energy_prices
-from fetch_generation_per_type import get_generation_all_types
-from fetch_weather import fetch_weather
+from .fetch_load import get_total_load
+from .fetch_prices import get_energy_prices
+from .fetch_generation_per_type import get_generation_all_types
+from .fetch_weather import get_weather
 
 def merge_all_sources(start_date, end_date, country_code="10YNL----------L"):
     """
@@ -24,7 +24,7 @@ def merge_all_sources(start_date, end_date, country_code="10YNL----------L"):
     df_load = get_total_load(start_date, end_date, country_code)
     df_prices = get_energy_prices(start_date, end_date, country_code)
     df_generation = get_generation_all_types(start_date, end_date, country_code)
-    df_weather = fetch_weather(52.4931, 5.4264, start_date, end_date)  # Coordinates for the Amsterdam
+    df_weather = get_weather(52.4931, 5.4264, start_date, end_date)  # Coordinates for the Amsterdam
 
     # Merge all DataFrames on datetime
     dfs = []
