@@ -20,7 +20,7 @@ def get_weather(lat, lon, start_date, end_date):
     
     ENTSO-E date format example: '202406250000'
     """
-    # Convert to ISO date (YYYY-MM-DD) for Open-Meteo
+    # Convert to ISO date (YYYY-MM-DD) for Open-Meteo API
     start_dt = datetime.strptime(start_date, "%Y%m%d%H%M")
     end_dt = datetime.strptime(end_date, "%Y%m%d%H%M")
 
