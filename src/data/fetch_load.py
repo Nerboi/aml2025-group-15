@@ -16,8 +16,7 @@ if ENTSOE_API_KEY is None:
 
 def get_total_load(start_date, end_date, country_code="10YNL----------L"):
     """
-    Fetch Actual Generation per Production Type from ENTSO-E and return as DataFrame.
-    If hourly=True, data is aggregated to hourly intervals.
+    Fetch total load data from ENTSO-E for a given date range and country code.
     """
     conn = http.client.HTTPSConnection("web-api.tp.entsoe.eu")
 
