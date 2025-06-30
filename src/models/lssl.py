@@ -1,6 +1,7 @@
 import torch
 from dataclasses import dataclass
-from util import gbt, hippo_matrix
+from .util import gbt, hippo_matrix
+
 
 
 @dataclass
