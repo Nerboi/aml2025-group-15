@@ -14,13 +14,13 @@ cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
 retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
 openmeteo = openmeteo_requests.Client(session=retry_session)
 
-def fetch_weather(lat, lon, start_date, end_date):
+def get_weather(lat, lon, start_date, end_date):
     """
     Fetch hourly weather data from Open-Meteo aligned with ENTSO-E date format.
     
     ENTSO-E date format example: '202406250000'
     """
-    # Convert to ISO date (YYYY-MM-DD) for Open-Meteo
+    # Convert to ISO date (YYYY-MM-DD) for Open-Meteo API
     start_dt = datetime.strptime(start_date, "%Y%m%d%H%M")
     end_dt = datetime.strptime(end_date, "%Y%m%d%H%M")
 
@@ -62,5 +62,5 @@ def fetch_weather(lat, lon, start_date, end_date):
 if __name__ == "__main__":
     start_date = "202406250000"
     end_date = "202406260000"
-    df_weather = fetch_weather(52.4931, 5.4264, start_date, end_date)
+    df_weather = get_weather(52.4931, 5.4264, start_date, end_date)
     print(df_weather.head())
