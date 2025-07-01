@@ -14,7 +14,7 @@ def gbt(A: torch.Tensor, B: torch.Tensor, dt: torch.Tensor) -> Tuple[torch.Tenso
     ```
     """
     dt = dt.view(-1, 1, 1)
-    I = torch.eye(A.shape[-1], device=A.device)
+    I = torch.eye(A.shape[-1], device=A.device, dtype=A.dtype)  # Ensure same device and dtype
 
     dtA = (dt / 2.0) * A
 

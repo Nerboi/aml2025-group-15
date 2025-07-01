@@ -155,23 +155,16 @@ class LSSLModelForSequenceClassification(torch.nn.Module):
         return u
     
 class LSSLModelForPriceForecast(torch.nn.Module):
-    def __init__(self, config: LSSLConfig, horizon: int = 1):
-        """
-        horizon = how many steps ahead to predict
-        """
+    def __init__(self, config: LSSLConfig, horizon: int = 1, input_dim: int = 16):
         super().__init__()
         self.horizon = horizon
-        self.in_proj = torch.nn.Linear(1, config.hidden_size)
+        self.in_proj = torch.nn.Linear(input_dim, config.hidden_size)
         self.lssl = LSSLModel(config)
-        self.fc = torch.nn.Linear(config.hidden_size, horizon)   # regression
+        self.fc = torch.nn.Linear(config.hidden_size, horizon)  
 
     def forward(self, u, mode: str = "recurrent"):
-        """
-        u shape  : [B, L, 1]
-        returns  : [B, horizon]   (forecast for the next `horizon` steps)
-        """
         u = self.in_proj(u)
-        h = self.lssl(u, mode)          # [B, L, H]
-        last_h = h[:, -1]               # use state at the final step
-        y_hat = self.fc(last_h)         # [B, horizon]
+        h = self.lssl(u, mode)          
+        last_h = h[:, -1]               
+        y_hat = self.fc(last_h)         
         return y_hat
