@@ -60,7 +60,7 @@ class MambaSSM(torch.nn.Module):
         )
 
         outputs = []
-        x = torch.zeros(batch_size, self.hidden_size, self.state_size)
+        x = torch.zeros(batch_size, self.hidden_size, self.state_size, device=input.device, dtype=input.dtype)
         for i in range(sequence_length):
 
             # Select the input at index i in the sequence
@@ -127,7 +127,7 @@ class MambaModelForHourlySeries(torch.nn.Module):
     """
     A thin convenience wrapper that:
       1. projects raw features → model width,
-      2. runs the Mamba block over a 24‑step (hourly) sequence,
+      2. runs the Mamba block over a 24-step (hourly) sequence,
       3. projects the hidden states to a single target value per step.
     Shapes:
         input   : (B, 24, in_features)
